@@ -1,0 +1,17 @@
+# Godot generated/imported cache
+.godot/
+
+# Android/export/build output
+/android/
+/export/
+/build/
+
+# Temporary editor/backup files
+*.tmp
+*.bak
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -1,0 +1,390 @@
+[gd_scene load_steps=13 format=3 uid="uid://ho4wi75fmxrn"]
+
+[ext_resource type="Script" uid="uid://b5nrprjemivxf" path="res://scripts/player/player.gd" id="1_player_script"]
+[ext_resource type="PackedScene" uid="uid://c4q38mr0v233e" path="res://scenes/enemies/enemy.tscn" id="2_enemy_scene"]
+
+[sub_resource type="CapsuleShape2D" id="PlayerCollision"]
+radius = 11.0
+height = 56.0
+
+[sub_resource type="RectangleShape2D" id="GroundCollision"]
+size = Vector2(2800, 80)
+
+[sub_resource type="RectangleShape2D" id="PlatformOneCollision"]
+size = Vector2(260, 24)
+
+[sub_resource type="RectangleShape2D" id="PlatformTwoCollision"]
+size = Vector2(220, 24)
+
+[sub_resource type="RectangleShape2D" id="PlatformThreeCollision"]
+size = Vector2(260, 24)
+
+[sub_resource type="RectangleShape2D" id="PlatformFourCollision"]
+size = Vector2(230, 24)
+
+[sub_resource type="Animation" id="Animation_reset"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LeftLegPivot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [0.0]}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RightLegPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [0.0]}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LeftHandPivot:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [0.0]}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RightHandPivot:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [0.0]}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Body:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [Vector2(0, 0)]}
+
+[sub_resource type="Animation" id="Animation_idle"]
+resource_name = "idle"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LeftLegPivot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [0.0]}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RightLegPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [0.0]}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LeftHandPivot:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [0.0]}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RightHandPivot:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [0.0]}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Body:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [Vector2(0, 0)]}
+
+[sub_resource type="Animation" id="Animation_walk"]
+resource_name = "walk"
+length = 0.48
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LeftLegPivot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {"times": PackedFloat32Array(0, 0.12, 0.24, 0.36, 0.48), "transitions": PackedFloat32Array(1, 1, 1, 1, 1), "update": 0, "values": [0.0, 0.34, 0.0, -0.34, 0.0]}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RightLegPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {"times": PackedFloat32Array(0, 0.12, 0.24, 0.36, 0.48), "transitions": PackedFloat32Array(1, 1, 1, 1, 1), "update": 0, "values": [0.0, -0.34, 0.0, 0.34, 0.0]}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LeftHandPivot:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {"times": PackedFloat32Array(0, 0.12, 0.24, 0.36, 0.48), "transitions": PackedFloat32Array(1, 1, 1, 1, 1), "update": 0, "values": [0.0, -0.12, 0.0, 0.12, 0.0]}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RightHandPivot:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {"times": PackedFloat32Array(0, 0.12, 0.24, 0.36, 0.48), "transitions": PackedFloat32Array(1, 1, 1, 1, 1), "update": 0, "values": [0.0, 0.12, 0.0, -0.12, 0.0]}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Body:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {"times": PackedFloat32Array(0, 0.12, 0.24, 0.36, 0.48), "transitions": PackedFloat32Array(1, 1, 1, 1, 1), "update": 0, "values": [Vector2(0, 0), Vector2(0, -2), Vector2(0, 0), Vector2(0, -2), Vector2(0, 0)]}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_character"]
+_data = {
+&"RESET": SubResource("Animation_reset"),
+&"idle": SubResource("Animation_idle"),
+&"walk": SubResource("Animation_walk")
+}
+
+[node name="Main" type="Node2D" unique_id=1428384553]
+
+[node name="Background" type="Polygon2D" parent="."]
+z_index = -100
+polygon = PackedVector2Array(-1800, -600, 3400, -600, 3400, 1200, -1800, 1200)
+color = Color(0.105, 0.16, 0.235, 1)
+
+[node name="DistantHills" type="Polygon2D" parent="."]
+z_index = -90
+polygon = PackedVector2Array(-1800, 405, -1550, 310, -1270, 390, -1000, 280, -760, 382, -490, 300, -230, 390, 60, 265, 330, 385, 610, 300, 880, 380, 1170, 270, 1450, 390, 1730, 300, 2050, 380, 2400, 300, 2750, 400, 3400, 400, 3400, 1200, -1800, 1200)
+color = Color(0.16, 0.25, 0.34, 1)
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1917562121]
+position = Vector2(220, 175)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_player_script")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1793648514]
+zoom = Vector2(0.8, 0.8)
+limit_left = -700
+limit_top = -300
+limit_right = 1900
+limit_bottom = 750
+position_smoothing_enabled = true
+position_smoothing_speed = 5.0
+
+[node name="AimPivot" type="Node2D" parent="Player" unique_id=1972300257]
+position = Vector2(8, -8)
+z_index = 20
+
+[node name="Weapon" type="Polygon2D" parent="Player/AimPivot" unique_id=564164733]
+polygon = PackedVector2Array(-7, -3, 0, -7, 21, -7, 29, -4, 29, 1, 12, 2, 8, 9, 3, 8, 4, 2, -7, 2)
+color = Color(0.075, 0.09, 0.13, 1)
+
+[node name="WeaponAccent" type="Polygon2D" parent="Player/AimPivot/Weapon"]
+position = Vector2(4, -4)
+polygon = PackedVector2Array(0, 0, 15, 0, 15, 2, 0, 2)
+color = Color(0.1, 0.68, 0.96, 1)
+
+[node name="Muzzle" type="Marker2D" parent="Player/AimPivot/Weapon" unique_id=47370339]
+position = Vector2(31, -2)
+
+[node name="HandGrip" type="Marker2D" parent="Player/AimPivot/Weapon" unique_id=463690763]
+position = Vector2(7, 2)
+
+[node name="CharacterVisual" type="Node2D" parent="Player" unique_id=1702789373]
+z_index = 10
+
+[node name="LeftLegPivot" type="Node2D" parent="Player/CharacterVisual" unique_id=1822403262]
+position = Vector2(-6, 8)
+z_index = 10
+
+[node name="Leg1Outline" type="Polygon2D" parent="Player/CharacterVisual/LeftLegPivot"]
+polygon = PackedVector2Array(-6, -2, 5, -2, 6, 12, 10, 18, 9, 22, -6, 22, -8, 18, -6, 12)
+color = Color(0.025, 0.04, 0.09, 1)
+
+[node name="Leg1" type="Polygon2D" parent="Player/CharacterVisual/LeftLegPivot"]
+polygon = PackedVector2Array(-4.5, 0, 3.8, 0, 4.5, 11, 8, 17, 7, 19.5, -4.5, 19.5, -5.5, 17, -4.5, 12)
+color = Color(0.055, 0.56, 0.96, 1)
+
+[node name="RightLegPivot" type="Node2D" parent="Player/CharacterVisual" unique_id=2130119314]
+position = Vector2(6, 8)
+z_index = 11
+
+[node name="Leg2Outline" type="Polygon2D" parent="Player/CharacterVisual/RightLegPivot"]
+polygon = PackedVector2Array(-6, -2, 5, -2, 6, 12, 10, 18, 9, 22, -6, 22, -8, 18, -6, 12)
+color = Color(0.025, 0.04, 0.09, 1)
+
+[node name="leg2" type="Polygon2D" parent="Player/CharacterVisual/RightLegPivot"]
+polygon = PackedVector2Array(-4.5, 0, 3.8, 0, 4.5, 11, 8, 17, 7, 19.5, -4.5, 19.5, -5.5, 17, -4.5, 12)
+color = Color(0.045, 0.43, 0.82, 1)
+
+[node name="LeftHandPivot" type="Node2D" parent="Player/CharacterVisual" unique_id=604482480]
+position = Vector2(-11, -12)
+z_index = 10
+
+[node name="LeftArmOutline" type="Polygon2D" parent="Player/CharacterVisual/LeftHandPivot"]
+polygon = PackedVector2Array(-4, -2, 4, -4, 8, 2, 8, 18, 5, 24, -2, 23, -6, 18, -5, 5)
+color = Color(0.025, 0.04, 0.09, 1)
+
+[node name="hand2" type="Polygon2D" parent="Player/CharacterVisual/LeftHandPivot"]
+polygon = PackedVector2Array(-2.5, 0, 3.5, -2, 6, 3, 6, 17, 3.5, 21, -1, 20, -4, 16, -3, 5)
+color = Color(0.055, 0.56, 0.96, 1)
+
+[node name="RightHandPivot" type="Node2D" parent="Player/CharacterVisual" unique_id=564729098]
+position = Vector2(11, -12)
+z_index = 13
+
+[node name="RightArmOutline" type="Polygon2D" parent="Player/CharacterVisual/RightHandPivot"]
+polygon = PackedVector2Array(-4, -2, 4, -4, 8, 2, 8, 18, 5, 24, -2, 23, -6, 18, -5, 5)
+color = Color(0.025, 0.04, 0.09, 1)
+
+[node name="hand1" type="Polygon2D" parent="Player/CharacterVisual/RightHandPivot"]
+polygon = PackedVector2Array(-2.5, 0, 3.5, -2, 6, 3, 6, 17, 3.5, 21, -1, 20, -4, 16, -3, 5)
+color = Color(0.075, 0.62, 0.99, 1)
+
+[node name="Body" type="Node2D" parent="Player/CharacterVisual" unique_id=349470217]
+z_index = 12
+
+[node name="BodyOutline" type="Polygon2D" parent="Player/CharacterVisual/Body"]
+polygon = PackedVector2Array(-12, -19, -7, -23, 7, -23, 12, -19, 14, -4, 13, 8, 8, 13, -8, 13, -13, 8, -14, -4)
+color = Color(0.025, 0.04, 0.09, 1)
+
+[node name="BodyFill" type="Polygon2D" parent="Player/CharacterVisual/Body"]
+polygon = PackedVector2Array(-10, -18, -6, -21, 6, -21, 10, -18, 12, -4, 11, 7, 7, 10, -7, 10, -11, 7, -12, -4)
+color = Color(0.045, 0.52, 0.92, 1)
+
+[node name="BodyHighlight" type="Polygon2D" parent="Player/CharacterVisual/Body"]
+polygon = PackedVector2Array(-5, -17, 5, -17, 7, -14, 7, -3, -7, -3, -7, -14)
+color = Color(0.17, 0.68, 1.0, 1)
+
+[node name="HeadPivot" type="Node2D" parent="Player/CharacterVisual" unique_id=1073893153]
+position = Vector2(0, -22)
+z_index = 15
+
+[node name="Head" type="Node2D" parent="Player/CharacterVisual/HeadPivot" unique_id=582683643]
+position = Vector2(0, -5)
+
+[node name="HeadOutline" type="Polygon2D" parent="Player/CharacterVisual/HeadPivot/Head"]
+polygon = PackedVector2Array(-15, -18, -12, -23, -7, -25, 7, -25, 12, -23, 15, -18, 15, 8, 12, 13, 7, 15, -7, 15, -12, 13, -15, 8)
+color = Color(0.025, 0.04, 0.09, 1)
+
+[node name="HeadFill" type="Polygon2D" parent="Player/CharacterVisual/HeadPivot/Head"]
+polygon = PackedVector2Array(-12.5, -18, -10, -21, -6, -23, 6, -23, 10, -21, 12.5, -18, 12.5, 7.5, 10, 11, 6, 12.5, -6, 12.5, -10, 11, -12.5, 7.5)
+color = Color(0.055, 0.56, 0.96, 1)
+
+[node name="HeadHighlight" type="Polygon2D" parent="Player/CharacterVisual/HeadPivot/Head"]
+polygon = PackedVector2Array(-7, -18, -4, -21, 5, -21, 8, -18, 8, -9, -7, -9)
+color = Color(0.17, 0.68, 1.0, 1)
+
+[node name="CharacterAnimation" type="AnimationPlayer" parent="Player/CharacterVisual" unique_id=1329303806]
+libraries/ = SubResource("AnimationLibrary_character")
+
+[node name="PlayerCollision" type="CollisionShape2D" parent="Player" unique_id=157744067]
+shape = SubResource("PlayerCollision")
+
+[node name="PrototypeArena" type="Node2D" parent="."]
+
+[node name="Ground" type="StaticBody2D" parent="PrototypeArena"]
+position = Vector2(600, 560)
+
+[node name="GroundShape" type="CollisionShape2D" parent="PrototypeArena/Ground"]
+shape = SubResource("GroundCollision")
+
+[node name="GroundVisual" type="Polygon2D" parent="PrototypeArena/Ground"]
+position = Vector2(-1400, -40)
+polygon = PackedVector2Array(0, 0, 2800, 0, 2800, 80, 0, 80)
+color = Color(0.25, 0.20, 0.15, 1)
+
+[node name="GrassCap" type="Polygon2D" parent="PrototypeArena/Ground"]
+position = Vector2(-1400, -40)
+polygon = PackedVector2Array(0, 0, 2800, 0, 2800, 8, 0, 8)
+color = Color(0.27, 0.85, 0.31, 1)
+
+[node name="PlatformOne" type="StaticBody2D" parent="PrototypeArena"]
+position = Vector2(270, 410)
+
+[node name="PlatformOneShape" type="CollisionShape2D" parent="PrototypeArena/PlatformOne"]
+shape = SubResource("PlatformOneCollision")
+
+[node name="PlatformOneBase" type="Polygon2D" parent="PrototypeArena/PlatformOne"]
+position = Vector2(-130, -12)
+polygon = PackedVector2Array(0, 0, 260, 0, 260, 24, 0, 24)
+color = Color(0.025, 0.04, 0.09, 1)
+
+[node name="PlatformOneFill" type="Polygon2D" parent="PrototypeArena/PlatformOne"]
+position = Vector2(-126, -8)
+polygon = PackedVector2Array(0, 0, 252, 0, 252, 16, 0, 16)
+color = Color(0.30, 0.23, 0.18, 1)
+
+[node name="PlatformOneGrass" type="Polygon2D" parent="PrototypeArena/PlatformOne"]
+position = Vector2(-130, -12)
+polygon = PackedVector2Array(0, 0, 260, 0, 260, 5, 0, 5)
+color = Color(0.27, 0.85, 0.31, 1)
+
+[node name="PlatformTwo" type="StaticBody2D" parent="PrototypeArena"]
+position = Vector2(620, 350)
+
+[node name="PlatformTwoShape" type="CollisionShape2D" parent="PrototypeArena/PlatformTwo"]
+shape = SubResource("PlatformTwoCollision")
+
+[node name="PlatformTwoBase" type="Polygon2D" parent="PrototypeArena/PlatformTwo"]
+position = Vector2(-110, -12)
+polygon = PackedVector2Array(0, 0, 220, 0, 220, 24, 0, 24)
+color = Color(0.025, 0.04, 0.09, 1)
+
+[node name="PlatformTwoFill" type="Polygon2D" parent="PrototypeArena/PlatformTwo"]
+position = Vector2(-106, -8)
+polygon = PackedVector2Array(0, 0, 212, 0, 212, 16, 0, 16)
+color = Color(0.30, 0.23, 0.18, 1)
+
+[node name="PlatformTwoGrass" type="Polygon2D" parent="PrototypeArena/PlatformTwo"]
+position = Vector2(-110, -12)
+polygon = PackedVector2Array(0, 0, 220, 0, 220, 5, 0, 5)
+color = Color(0.27, 0.85, 0.31, 1)
+
+[node name="PlatformThree" type="StaticBody2D" parent="PrototypeArena"]
+position = Vector2(910, 435)
+
+[node name="PlatformThreeShape" type="CollisionShape2D" parent="PrototypeArena/PlatformThree"]
+shape = SubResource("PlatformThreeCollision")
+
+[node name="PlatformThreeBase" type="Polygon2D" parent="PrototypeArena/PlatformThree"]
+position = Vector2(-130, -12)
+polygon = PackedVector2Array(0, 0, 260, 0, 260, 24, 0, 24)
+color = Color(0.025, 0.04, 0.09, 1)
+
+[node name="PlatformThreeFill" type="Polygon2D" parent="PrototypeArena/PlatformThree"]
+position = Vector2(-126, -8)
+polygon = PackedVector2Array(0, 0, 252, 0, 252, 16, 0, 16)
+color = Color(0.30, 0.23, 0.18, 1)
+
+[node name="PlatformThreeGrass" type="Polygon2D" parent="PrototypeArena/PlatformThree"]
+position = Vector2(-130, -12)
+polygon = PackedVector2Array(0, 0, 260, 0, 260, 5, 0, 5)
+color = Color(0.27, 0.85, 0.31, 1)
+
+[node name="PlatformFour" type="StaticBody2D" parent="PrototypeArena"]
+position = Vector2(1300, 370)
+
+[node name="PlatformFourShape" type="CollisionShape2D" parent="PrototypeArena/PlatformFour"]
+shape = SubResource("PlatformFourCollision")
+
+[node name="PlatformFourBase" type="Polygon2D" parent="PrototypeArena/PlatformFour"]
+position = Vector2(-115, -12)
+polygon = PackedVector2Array(0, 0, 230, 0, 230, 24, 0, 24)
+color = Color(0.025, 0.04, 0.09, 1)
+
+[node name="PlatformFourFill" type="Polygon2D" parent="PrototypeArena/PlatformFour"]
+position = Vector2(-111, -8)
+polygon = PackedVector2Array(0, 0, 222, 0, 222, 16, 0, 16)
+color = Color(0.30, 0.23, 0.18, 1)
+
+[node name="PlatformFourGrass" type="Polygon2D" parent="PrototypeArena/PlatformFour"]
+position = Vector2(-115, -12)
+polygon = PackedVector2Array(0, 0, 230, 0, 230, 5, 0, 5)
+color = Color(0.27, 0.85, 0.31, 1)
+
+[node name="Enemy" parent="." instance=ExtResource("2_enemy_scene")]
+position = Vector2(1000, 485)
